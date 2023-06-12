@@ -1,10 +1,10 @@
 const db = require("../db");
 
-class Pessoa {
+class Produto {
   static async select() {
     try {
       const connect = await db.connect();
-      const sql = "SELECT *FROM pessoas"
+      const sql = "SELECT *FROM produtos"
       return await connect.query(sql);
     } catch (error) {
       console.error('Erro em select:', error);
@@ -58,4 +58,4 @@ class Pessoa {
   }
 }
 
-module.exports = Pessoa;
+module.exports = Produto;
