@@ -22,11 +22,11 @@ class Produto {
     }
   }
 
-  static async insert(data) {
+  static async insert(produto) {
     try {
       const connect = await db.connect();
-      const sql = "INSERT INTO pessoas(nome, idade, uf) VALUES ($1, $2, $3) RETURNING id, nome, idade, uf;";
-      const values = [data.nome, data.idade, data.uf];
+      const sql = "INSERT INTO produtos (titulo, data_cadastro, preco, descricao, imagem) VALUES ($1, $2, $3, $4, $5) RETURNING id, titulo, data_cadastro, preco, descricao, imagem;";
+      const values = [produto.titulo, produto.data_cadastro, produto.preco, produto.descricao, produto.imagem];
       return await connect.query(sql, values);
     } catch (error) {
       console.error('Erro em insert:', error);
@@ -34,11 +34,11 @@ class Produto {
     }
   }
 
-  static async update(id, data) {
+  static async update(id, produto) {
     try {
       const connect = await db.connect();
       const sql = "";
-      const values = [data.nome, data.idade, data.uf, id];
+      const values = [produto.titulo, produto.data_cadastro, produto.preco, produto.descricao, produto.imagem, codigo];
       return await connect.query(sql, values);
     } catch (error) {
       console.error('Erro em update:', error);
@@ -49,7 +49,7 @@ class Produto {
   static async delete(id) {
     try {
       const connect = await db.connect();
-      const sql = "DELETE FROM pessoas WHERE id=$1";
+      const sql = "DELETE FROM produtos WHERE id=$1";
       return await connect.query(sql, [id]);
     } catch (error) {
       console.error('Erro em delete:', error);
