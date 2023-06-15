@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/produtos', async function(req, res){
+app.get('/produtos', async function(_req, res){
   try {
     var produtos = await Produto.select();
     res.json(produtos.rows);
@@ -21,17 +21,18 @@ app.get('/produtos', async function(req, res){
   }
 });
 
-app.post('/produtos', async function(req, res){
+app.get('/produtos/:codigo', async function(req, res){
   try {
-    var produto = await Produto.selectOne(req.body.id);
-    res.json(produto.rows[0]);
+    var produtos = await Produto.selectOne(req.params.codigo);
+    res.json(produtos.rows);
   } catch (error) {
     console.error('Erro ao buscar produtos:', error);
     res.status(500).json({ error: 'Ocorreu um erro ao buscar produtos' });
   }
 });
 
-app.post('/produto', async function(req,res){
+
+app.post('/produtos', async function(req,res){
   try{
     var produto = req.body
     var produto = await Produto.insert(produto);
@@ -41,7 +42,7 @@ app.post('/produto', async function(req,res){
   }
 })
 
-app.delete('/produto', async function(req, res){
+app.delete('/produtos', async function(req, res){
   try {
     console.log(req.body.id)
     var produto = await Produto.delete(req.body.id);
